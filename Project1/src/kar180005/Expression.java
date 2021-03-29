@@ -294,15 +294,15 @@ public class Expression {
             // Hold infix notation of input operation
             List<Token> infix = new LinkedList<>();
 
+            // Get the next line, remove all spaces from input
             // Split the string at every operator, keep the operator in the array
             // This instead of .split("") because numbers need to stay together
-            // Ex: "11*(46-45)^241-11" -> [ 11, *, (, 46, -, 45, ), ^, 241, -, 11 ]
-            String[] tokens = in.nextLine().split("(?<=[-+*/%()^])|(?=[-+*/%()^])");
+            // Ex: "11 * (46-45) ^ 241- 11 " -> [ 11, *, (, 46, -, 45, ), ^, 241, -, 11 ]
+            String[] tokens = in.nextLine().replaceAll("\\s+", "").split("(?<=[-+*/%()^])|(?=[-+*/%()^])");
             for (String tok : tokens)
-                infix.add(getToken(tok));
+                infix.add(getToken(tok.trim()));
 
-            // If input has at least 3 tokens (a op b...)
-            if (infix.size() >= 3) {
+            if (infix.size() >= 1) {
                 System.out.println("Expression number: " + count);
                 System.out.println("Infix expression: " + infix);
 

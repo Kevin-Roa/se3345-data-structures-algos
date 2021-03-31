@@ -1,0 +1,36 @@
+1. In the bin packing problem, objects of different volumes must be packed
+   into a finite number of bins or containers, each of capacity C, in a way
+   that minimizes the number of bins used. 
+
+   A well-known heuristic for this problem, known as "Worst fit" proceeds as follows.
+   Consider the items in the order they are given.
+   Put each item into the emptiest bin among those with something in them. 
+   Start a new bin if the item does not fit into any bin that has already been started.
+
+   Write the above algorithm using priority queues and analyze its running time.
+	
+int worstFit(int[] size, int C)  // C is capacity of each bin. Return number of bins used.
+	PriorityQueue<Integer> pq = new PriorityQueue<>();
+	int count;
+
+	for(s in size)
+		int bin = pq.peek();
+
+		if(bin == null)       // Empty
+			pq.add(s); 
+		else if(bin + s == C) // Full bin
+			pq.remove();
+			count++;
+		else if (bin + s < C) // Partial bin
+			pq.remove();
+			pq.add(bin + s);
+		else // bin + c > C   // New bin
+			pq.add(s);
+	
+	return count + pq.size(); // Full bins + Partiall bins
+		
+RT: O(nlog(n))
+	The program loops over n elements in the size array. Inside the loop, the program executes priority queue functions which take at most
+	O(log(n)) time. With that, the worst case scenario would be looping over all elements and adding all of them to the same bin. 
+	That would be: n * (log(n) + log(n)) or 2nlog(n) because in that scenario you loop over the entire array and perform both a remove 
+	and add operation. 2nlog(n) = O(nlog(n))

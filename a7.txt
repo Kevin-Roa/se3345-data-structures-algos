@@ -1,0 +1,62 @@
+Given an array A, return a list that has those elements of A that
+occur most often, in the order of their first appearance in A.
+Solve the problem using hash tables in expected time of O(n).
+For example, if A = {2,6,3,4,5,4,6,3,5,4,5,6}.  mostOften(A) returns {6,4,5}.
+All three elements appear 3 times in A, more often than the other elements,
+and the first occurrence of 6 in A is before the first occurrences of 4 and 5,
+and the first occurrence of 4 is before the first occurrence of 5.
+Analyze the expected running time of the algorithm.
+
+List mostOften(int[] A)
+  HashTable occurrance = new HashTable   // number of times num has occurred
+  HashTable apprearance = new HashTable  // index of first appearance of num
+  List most = new LinkedList             // List of nums with most occurrances
+  int top = 0                            // Most number of occurrances
+
+  for(int i = 0; i < A.length; i++)
+    ct = occurrance.get(A[i])            // num times A[i] has occurred
+
+    if(ct == null)                       // if occurred 0 times
+      ct = 1                               // update count of A[i]
+      occurrance.add(A[i], 1)              // add to occurrance list
+      appearance.add(A[i], i)              // add to appearance list
+    else                                 // if has already occurred
+      ct + 1;                              // update count of A[i]
+      occurrance.remove(A[i])              // remove from occurrance list 
+      occurrance.add(A[i], ct)             // add back with updated occurrance value
+    
+    if (ct == top)                       // if count of A[i] is equal to count of most occurrances
+      most.add(A[i])                       // add A[i] to most occurred list
+    else if(ct > top)                    // if count of A[i] greater than current top,
+      top = ct                             // change top to new most occurrances
+      most.clear()                         // clear the list, const time
+      most.add(A[i])                       // add A[i] to the fresh list
+
+                                         // sort the most list in O(n) time
+  Integer[] ret = new Integer[A.length]    // lines 36-38
+  for (n in most)                            // put nums with most occurrances in order they appeared
+    ret[appearance.get(n)] = n               // deeds to be Integer array
+  most.clear()                             // clear most list to re-add values
+  for(n in ret)                            // lines 39-41
+    if(n != null)                            // put nums back in most list in proper order
+      most.add(n)                            // Integer arrays default to null instead of 0
+  
+  return most;
+  
+
+RT: Expected O(n)
+  The for loop iterates over the given array which has n elements. Inside the for loop there are
+  various conditional statements which call HashTable or LinkedList functions. The HashTable
+  functions that are called are get(), add(), and remove() which all have an expected run time of O(1).
+  For the LinkedList, only add is used which also has a run time of O(1). (ArrayList would have 
+  also worked here). In other words, the inside of the for loop is expected to run in constant time.
+  After the for loop, the most list contains the nums with most occurrances but they are not in the
+  proper order. To sort them, two separate for loops are used that iterate at worst n times. 
+  Inside the for loops are Array and LinkedList opertations which run in O(1) time. 
+
+  Calculating the expected run time gives (n * (1 + (1 + 1) + 1) + n + n) = 6n which is O(n). This 
+  is the expected run time but could potentially be worse if the HashTable runs into many collisions. 
+  At a very worst case, HashTable functions could run in O(n) time instead of O(1) which makes this 
+  solution O(n^2) in the worst case. This worst case scenario is extremely unlikely to happen 
+  considering the use of active mitigations such as having a good hash function, having a good load 
+  factor, or using quadratic probing.

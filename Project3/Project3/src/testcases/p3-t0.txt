@@ -1,0 +1,25 @@
+# Sample input:
+Insert 22 19 475 1238 9742 0
+# New item with id=22, price="$19", description="475 1238 9742"
+# Return: 1
+#
+Insert 12 96 44 109 0
+# Second item with id=12, price="96", description="44 109"
+# Return: 1
+#
+Insert 37 47 109 475 694 88 0
+# Another item with id=37, price="47", description="109 475 694 88"
+# Return: 1
+#
+FindMaxPrice 475
+# Return: 47 (id of items considered: 22, 37).  Added to total: 47
+#
+Delete 37
+# Return: 1366 (=109+475+694+88)
+#
+FindMaxPrice 475
+# Return: 19 (id of items considered: 22).  Added to total: 19
+#
+End
+
+Output: 1435
